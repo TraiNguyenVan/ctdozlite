@@ -899,6 +899,13 @@ fn build_fonts(ctx: &egui::Context, with_cjk: bool) {
         egui::FontData::from_static(BUNDLED_SANS),
     );
 
+    // The default emoji font in epaint 0.29 lacks several common newer emoji.
+    const EMOJI_FONT: &[u8] = include_bytes!("../assets/fonts/EmojiOneBW.ttf");
+    fonts.font_data.insert(
+        "emoji_font".to_owned(),
+        egui::FontData::from_static(EMOJI_FONT),
+    );
+
     let font_candidates = [
         "C:\\Windows\\Fonts\\segoeui.ttf",
         "C:\\Windows\\Fonts\\arial.ttf",
@@ -960,6 +967,7 @@ fn build_fonts(ctx: &egui::Context, with_cjk: bool) {
     if fonts.font_data.contains_key("cjk_font") {
         prop.push("cjk_font".to_owned());
     }
+    prop.push("emoji_font".to_owned());
     prop.push("lucide_font".to_owned());
 
     let mono = fonts
